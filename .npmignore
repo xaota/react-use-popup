@@ -7,4 +7,5 @@ node_modules
 *.tgz
 
 webpack.config.js
-*.md
+contributing.md
+license.md
