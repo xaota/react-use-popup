@@ -7,5 +7,4 @@ node_modules
 *.tgz
 
 webpack.config.js
-contributing.md
-readme.md
+*.md
