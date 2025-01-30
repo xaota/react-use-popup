@@ -46,7 +46,10 @@
   ],
   "license": "Unlicense",
   "author": "https://github.com/xaota",
-  "repository": "https://github.com/xaota/react-use-popup",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xaota/react-use-popup.git"
+  },
   "homepage": "https://github.com/xaota/react-use-popup",
   "bugs": "https://github.com/xaota/react-use-popup/issues?q=is:issue+label:bug",
   "publishConfig": {
