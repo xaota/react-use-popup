@@ -1,0 +1,61 @@
+{
+  "name": "react-use-popup",
+  "version": "1.0.0",
+  "description": "Popups and modal management for react-fiber SPA apps based on custom events (without contexts)",
+  "main": "index.js",
+  "types": "index.ts",
+  "type": "module",
+  "scripts": {
+    "build": "npx tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.12.0",
+    "typescript": "^5.7.3"
+  },
+  "peerDependencies": {
+    "@types/react": ">=16.8.0 <20.0.0",
+    "@types/react-dom": ">=16.8.0 <20.0.0",
+    "react": ">=16.8.0 <20.0.0",
+    "react-dom": ">=16.8.0 <20.0.0"
+  },
+  "keywords": [
+    "react",
+    "fiber",
+    "popup",
+    "popup",
+    "management",
+    "custom",
+    "events",
+    "typescript",
+    "hooks",
+    "ui",
+    "modal",
+    "dialog",
+    "esnext",
+    "semantic",
+    "action",
+    "forms",
+    "business logic",
+    "data flow",
+    "state",
+    "state manage",
+    "state management",
+    "store",
+    "popup store"
+  ],
+  "license": "Unlicense",
+  "author": "https://github.com/xaota",
+  "repository": "https://github.com/xaota/react-use-popup",
+  "homepage": "https://github.com/xaota/react-use-popup",
+  "bugs": "https://github.com/xaota/react-use-popup/issues?q=is:issue+label:bug",
+  "publishConfig": {
+    "access": "public"
+  },
+  "funding": [
+    {
+      "type": "github",
+      "url": "https://github.com/sponsors/xaota"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+.DS_Store
+.vscode
+.gitignore
+tsconfig.json
+
+node_modules
+*.tgz
+
+webpack.config.js
+contributing.md
+readme.md
