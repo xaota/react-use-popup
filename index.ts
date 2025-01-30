@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 
 type UsePopupHooks<OpenParams, CloseParams> = {
-  open?: (e: OpenParams) => void;
-  close?: (e: CloseParams) => void
+  open?: (detail: OpenParams) => void;
+  close?: (detail: CloseParams) => void;
 }
 
 const prefix: Record<"popupOpen" | "popupClose", string> = {
