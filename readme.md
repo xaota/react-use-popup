@@ -1,42 +1,44 @@
 # Popups management for React SPA
 
 > This package from 🇷🇺 Russia with love!
+>
+> You can read this readme in [Russian](./readme.ru.md).
 
 ## Motivation / Features
 
-- [x] Компоненты в попапе имеют окружение доменной области
-- [x] Не хочется иметь централизованное хранилище попапов
-- [x] Можно открывать попапы из любого места приложения
-- [x] Простая API
-- [x] Можно использовать вне реакта (например, в STM)
-- [ ] Поддержка microfrontends
+- [x] Components in the popup have a domain area environment
+- [x] No need for a centralized popup store
+- [x] Popups can be opened from anywhere in the application
+- [x] Simple API
+- [x] Can be used outside of React (e.g., in STM)
+- [ ] Microfrontends support
 
-> Этот пакет не реализует UI модальных окон.
-> Он предназначен только _для управления ими_ в приложении
+> This package does not implement the UI of modal windows.
+> It is only intended _to manage them_ in the application.
 
-Вы можете использовать его с любыми UI-попапами в React, например, с модальными окнами из Material-UI, Ant Design, react-modal или любыми другими
+You can use it with any UI popups in React, such as modal windows from Material-UI, Ant Design, react-modal, or any others.
 
 ## Little bit of theory / Vocabulary
 
-__Попап__ - UI-компонент с контентом, который может быть показан либо скрыт в зависимости от значения некой props-переменной.
+__Popup__ - A UI component with content that can be shown or hidden depending on the value of a certain props variable.
 
-> Сами попапы не содержат в себе бизнес-логику приложения.
+> Popups themselves do not contain the business logic of the application.
 
-Попапы можно разделить на динамические и статическиме, а также на локальные и глобальные.
+Popups can be divided into dynamic and static, as well as local and global.
 
-__Динамический попап__ - Содержимое такого попапа маунтится и анмаунтится только при открытии и закрытии попапа.
+__Dynamic popup__ - The content of such a popup is mounted and unmounted only when the popup is opened and closed.
 
-__Статический попап__ - Содержимое такого попапа маунтится и анмаунтится вместе с доменной областью в которой будет использоваться.
+__Static popup__ - The content of such a popup is mounted and unmounted along with the domain area in which it will be used.
 
-В таких компонентах не имеет смысла использовать `useEffect` на маунт, скорее всего этот хук сработает задолго до открытия попапа.
+In such components, it does not make sense to use `useEffect` on mount, most likely this hook will trigger long before the popup is opened.
 
-> Как правило, такие попапы сохраняют состояния между открытиями, что может быть полезно в некоторых задачах
+> As a rule, such popups retain their state between openings, which can be useful in some tasks.
 
-__Экшены__ - компоненты которые являются контейнерами для попапов.
+__Actions__ - components that are containers for popups.
 
-В самом простом случае они содержат бизнес-логику приложения, нужны только для открытия и закрытия попапов.
+In the simplest case, they contain the business logic of the application, needed only to open and close popups.
 
-_пример:_
+_example:_
 ```tsx
 import type { FC, PropsWithChildren } from "react";
 import { usePopup } from "react-use-popup";
@@ -53,14 +55,15 @@ const ExampleAction: FC<PropsWithChildren> = props => {
 };
 ```
 
-Вы можете располагать экшены в любом месте приложения, где вам удобно.
+You can place actions anywhere in the application where it is convenient for you.
 
-Рекомендуется делать это в доменной области, где будет использоваться попап, так как вы сможете использовать пропсы, контексты и хуки из этой области.
+It is recommended to do this in the domain area where the popup will be used, as you will be able to use props, contexts, and hooks from this area.
 
-> Далеко не все попапы (скорее практически никакие) не должны быть прям совсем глобальными.
+> Not all popups (rather almost none) should be completely global.
 
-__Локальные попапы__ - попапы, которые открываются только в одном конкретном месте приложения. Экшн с таким попапом удобно располагать прямо в компоненте, где он будет использоваться.
+__Local popups__ - popups that open only in one specific place in the application. An action with such a popup is conveniently placed directly in the component where it will be used.
 
+_example:_
 ```tsx
 <>
   <Button onClick={() => openPopup("popup-example")}>Open popup</Button>
@@ -68,9 +71,9 @@ __Локальные попапы__ - попапы, которые открыв�
 </>
 ```
 
-__Глобальные попапы__ - попапы, которые могут быть открыты из любого места конкретной доменной области приложения. Экшн с таким попапом удобно располагать в корневом компоненте доменной области.
+__Global popups__ - popups that can be opened from anywhere in a specific domain area of the application. An action with such a popup is conveniently placed in the root component of the domain area.
 
-> Как правило это попапы, которые могут быть открыты из разных мест приложения
+> As a rule, these are popups that can be opened from different places in the application.
 
 ```tsx
 <>
@@ -86,22 +89,22 @@ __Глобальные попапы__ - попапы, которые могут 
 </>
 ```
 
-При этом если пользователь покинет доменную область, попап будет размонтирован.
+At the same time, if the user leaves the domain area, the popup will be unmounted.
 
 ## Usage
-Для каждого экшена нужно завести уникальный `intent: srting` - ключ для открытия попапа с этим экшеном
+For each action, you need to create a unique `intent: string` - a key to open the popup with this action.
 
 ```tsx
 import type { FC, PropsWithChildren } from "react";
 import { usePopup } from "react-use-popup";
 
-// Удобно описывать intent в компоненте экшена и экспортировать из него
+// It is convenient to describe the intent in the action component and export it from there
 export const intent = "popup-example";
 
 const ExampleAction: FC<PropsWithChildren> = props => {
   const { children } = props;
 
-  // использование intent для получения состояния открытия попапа
+  // use the intent to get the popup open state
   const visible = usePopup(intent);
 
   return (
@@ -112,7 +115,7 @@ const ExampleAction: FC<PropsWithChildren> = props => {
 };
 ```
 
-Для открытия попапа надо просто вызвать метод открытия с нужным `intent`.
+To open a popup, just call the open method with the desired `intent`.
 ```tsx
 import { openPopup } from "react-use-popup";
 import { intent } from "./ExampleAction";
@@ -120,13 +123,13 @@ import { intent } from "./ExampleAction";
 <Button onClick={() => openPopup(intent)}>Open popup</Button>
 ```
 
-Это работает и в реакте и за его пределами (redux, эффектор, саги и т.д.)
+This works both in React and outside of it (redux, effector, sagas, etc.)
 
-> _Почему?_
-> Для управления поапами используется `CustomEvent`.
-> Контекстом выступает `window`, который доступен везде.
+> _Why?_
+> `CustomEvent` is used to manage popups.
+> The context is `window`, which is available everywhere.
 
-Для закрытия попапа нужно вызвать метод закрытия с тем же `intent`.
+To close a popup, you need to call the close method with the same `intent`.
 ```tsx
 import { closePopup } from "react-use-popup";
 import { intent } from "./ExampleAction";
@@ -134,15 +137,15 @@ import { intent } from "./ExampleAction";
 <Button onClick={() => closePopup(intent)}>Close popup</Button>
 ```
 
-Вы также можете установить обработчики, которые будут вызваны при открытии / закрытии попапа
+You can also set handlers that will be called when the popup is opened/closed.
 
 ## Handbook
 
-### Передача параметров в компонент в попапе
-Просто передайте их как пропсы.
-Или используйте контексты, хуки и т.д. из вашей доменной области
+### Passing parameters to the component in the popup
+Just pass them as props.
+Or use contexts, hooks, etc. from your domain area.
 
-> Вы можете использовать `useEffect` на пропсы как обычно
+> You can use `useEffect` on props as usual.
 
 ```tsx
 import type { UUID } from "node:crypto";
@@ -164,7 +167,7 @@ const ExampleAction: FC = props => {
 };
 ```
 
-В динамических попапах удобно использовать `useEffect` на маунт
+In dynamic popups, it is convenient to use `useEffect` on mount.
 
 ```tsx
 const Article: FC<{ id: UUID }> = props => {
@@ -178,11 +181,11 @@ const Article: FC<{ id: UUID }> = props => {
 };
 ```
 
-### Передача параметров при открытии
-> Это актуально для статических попапов.
-> В динамических попапах вероятно проще использовать `useEffect` на маунт (см. выше)
+### Passing parameters when opening
+> This is relevant for static popups.
+> In dynamic popups, it is probably easier to use `useEffect` on mount (see above).
 
-Вы можете передать объект с параметрами в метод открытия попапа
+You can pass an object with parameters to the popup open method.
 
 ```tsx
 import { openPopup } from "react-use-popup";
@@ -196,7 +199,7 @@ const openHandler = useCallback(
 <Button onClick={openHandler}>Open popup</Button>
 ```
 
-Эти параметры будут переданы в перехватчик открытия и вы сможете обработать их
+These parameters will be passed to the open handler and you will be able to process them.
 
 ```tsx
 const ExampleAction: FC = () => {
@@ -212,14 +215,14 @@ const ExampleAction: FC = () => {
 };
 ```
 
-В этом кейсе не рекомендуется менять пропсы компонента в попапе.
+In this case, it is not recommended to change the props of the component in the popup.
 
-Лучше вызвать метод из компонента напрямую (см. ниже)
+It is better to call the method from the component directly (see below).
 
-### Загрузка данных при открытии попапа
-Идея в том чтобы логика компонента внутри попапа не знала о том, что он находится в попапе.
+### Loading data when opening a popup
+The idea is that the logic of the component inside the popup does not know that it is in a popup.
 
-Однако, если мы не можем использовать `useEffect` на маунт (например в статических попапах), то можно передать управление наружу (лучше всего с помощью `ref / useImperativeHandle`)
+However, if we cannot use `useEffect` on mount (for example, in static popups), then we can pass control outside (preferably using `ref / useImperativeHandle`).
 
 ```tsx
 const ExampleAction: FC = () => {
@@ -237,7 +240,7 @@ const ExampleAction: FC = () => {
 };
 ```
 
-Это позволяет избежать лишних ререндеров а также позволяет экспортировать дополнительные методы
+This avoids unnecessary re-renders and also allows exporting additional methods.
 
 ```tsx
 const PopupContent = props => {
@@ -255,9 +258,9 @@ const PopupContent = props => {
 };
 ```
 
-### Отправка формы из попапа перед закрытием
-- Форма в попапе сама управляет логикой отправки данных сервер, а чтобы попап закрылся после успешной отправки, нужно вызвать метод закрытия попапа. Для этого передадим его в форму
-- А из формы экспортируем контроллер отправки и повесим его на кнопку в попапе
+### Submitting a form from a popup before closing
+- The form in the popup manages the logic of sending data to the server itself, and to close the popup after a successful submission, you need to call the popup close method. To do this, pass it to the form.
+- And from the form, export the submit controller and attach it to the button in the popup.
 
 ```tsx
 import { closePopup, usePopup } from "react-use-popup";
@@ -279,7 +282,7 @@ const ExampleAction: FC = () => {
   );
 };
 ```
-Внутри компонента, который будет в попапе мы описываем логику отправки, так как находимся непосредственно в бизнес-логике приложения.
+Inside the component that will be in the popup, we describe the logic of submission, as we are directly in the business logic of the application.
 ```tsx
 const PopupContent = props => {
   const { closeHandler, ref } = props;
@@ -298,18 +301,18 @@ const PopupContent = props => {
   return <form>...</form>;
 };
 ```
-Тут форма сама управляет логикой отправки себя на сервер
+Here the form manages the logic of sending itself to the server.
 
-* если ошибка - показываем ошибку
-* если успех - тогда после отправки закрываем попап
+* if there is an error - show the error
+* if successful - then after sending, close the popup
 
-### Открытие второго попапа для подтверждения
+### Opening a second popup for confirmation
 
-Просто создайте еще один экшн именно для подтверждения (мб можно даже универсальный сделать)
+Just create another action specifically for confirmation (maybe you can even make it universal).
 
-теперь просто открываем новый экшн поверх старого и передаем ему обработчик confirm формы
+Now just open the new action on top of the old one and pass it the confirm form handler.
 
-### Работа с роутером - реакция на изменение url
+### Working with the router - reacting to URL changes
 ```tsx
 const { pathname } = useLocation();
 
@@ -320,17 +323,17 @@ useEffect(() => {
  }, [pathname]);
 ```
 
-> Изменение урла при открытии попапа не имеет смысла - лучше просто изменить урл + использовать код выше → поведение будет тоже самое
+> Changing the URL when opening a popup does not make sense - it is better to just change the URL + use the code above → the behavior will be the same.
 
-### Бонус - мультиинстансинг
+### Bonus - multi-instance
 
-это когда попап один и тот же, при этом открыто несколько окон одновременно, а содержимое разное
+This is when the same popup is open, but several windows are open at the same time, and the content is different.
 
-> Тут можно разрулить на уровне Action
+> This can be resolved at the Action level.
 
-Единственное, так как история кастомная, нужно будет не использовать хук `usePopup`, а самостоятельно сделать обработчики - они должны создавать инстанс попапа и добавлять в список, который будет рендериться в этом Action
+The only thing is that since the history is custom, you will need to not use the `usePopup` hook, but make the handlers yourself - they should create an instance of the popup and add it to the list that will be rendered in this Action.
 
-> issue: [Поддержка мультиинстансинга](//github.com/xaota/react-use-popup/issues/4)
+> issue: [Multi-instance support](//github.com/xaota/react-use-popup/issues/4)
 
 ### Installation
 ```shell
@@ -341,18 +344,18 @@ $ npm install react-use-popup
 #### openPopup
 > `openPopup<OpenParams>(intent: string, detail?: OpenParams): void`
 
-открывает попап с указанным `intent` и передает параметры в обработчик открытия
+opens a popup with the specified `intent` and passes parameters to the open handler.
 
 #### closePopup
 > `closePopup<CloseParams>(intent: string, detail?: CloseParams): void`
 
-закрывает попап с указанным `intent` и передает параметры в обработчик закрытия
+closes a popup with the specified `intent` and passes parameters to the close handler.
 
 #### usePopup [react-hook]
 
 > `usePopup(intent: string, hooks?: UsePopupHooks<OpenParams, CloseParams>): boolean`
 
-возвращает состояние открытия попапа с указанным `intent` и позволяет установить обработчики открытия и закрытия
+returns the open state of the popup with the specified `intent` and allows you to set open and close handlers.
 ```ts
 type UsePopupHooks<OpenParams, CloseParams> = {
   open?: (detail: OpenParams) => void;
@@ -367,6 +370,6 @@ type UsePopupHooks<OpenParams, CloseParams> = {
 
 ## ROADMAP
 
-- [ ] [Обработка данных закрытия](//github.com/xaota/react-use-popup/issues/2)
-- [ ] [Кастомный prefix для событий открытия / закрытия](//github.com/xaota/react-use-popup/issues/3)
-- [ ] [Поддержка мультиинстансинга](//github.com/xaota/react-use-popup/issues/4)
+- [ ] [Close data processing](//github.com/xaota/react-use-popup/issues/2)
+- [ ] [Custom prefix for open/close events](//github.com/xaota/react-use-popup/issues/3)
+- [ ] [Multi-instance support](//github.com/xaota/react-use-popup/issues/4)
